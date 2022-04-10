@@ -12,6 +12,7 @@
 
 #define LOG_NAME "CLIENTE_LOG"
 #define LOG_FILE "cliente.log"
+#define CONFIG_FILE "cliente.config"
 
 t_log* iniciar_logger(void);
 t_config* iniciar_config(void);

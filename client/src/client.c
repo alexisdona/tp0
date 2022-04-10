@@ -9,17 +9,16 @@ int main(void)
 	char* puerto;
 	char* valor;
 
-	t_log* logger = iniciar_logger();
+	t_log* logger;
 
 	t_config* config;
 
 	/* ---------------- LOGGING ---------------- */
 
-	//logger = iniciar_logger();
-	log_info(logger, "Hola soy un log");
+	logger = iniciar_logger();
 
-	// Usando el logger creado previamente
-	// Escribi: "Hola! Soy un log"
+	log_info(logger, "Hola! soy un log");
+
 
 
 	/* ---------------- ARCHIVOS DE CONFIGURACION ---------------- */
@@ -28,10 +27,15 @@ int main(void)
 
 	// Usando el config creado previamente, leemos los valores del config y los 
 	// dejamos en las variables 'ip', 'puerto' y 'valor'
+	ip = config_get_string_value(config, "IP");
+	puerto = string_itoa(config_get_int_value(config, "PUERTO"));
+	valor = config_get_string_value(config, "CLAVE");
 
 	// Loggeamos el valor de config
 
-
+	log_info(logger, "ip:%s", ip);
+	log_info(logger, "puerto:%d",puerto);
+	log_info(logger, "valor:%s", valor);
 	/* ---------------- LEER DE CONSOLA ---------------- */
 
 	leer_consola(logger);
@@ -63,7 +67,7 @@ t_log* iniciar_logger(void)
 
 t_config* iniciar_config(void)
 {
-	t_config* nuevo_config;
+	t_config* nuevo_config = config_create(CONFIG_FILE);
 
 	return nuevo_config;
 }
@@ -99,4 +103,6 @@ void terminar_programa(int conexion, t_log* logger, t_config* config)
 {
 	/* Y por ultimo, hay que liberar lo que utilizamos (conexion, log y config) 
 	  con las funciones de las commons y del TP mencionadas en el enunciado */
+	log_destroy(logger);
+	config_destroy(config);
 }
