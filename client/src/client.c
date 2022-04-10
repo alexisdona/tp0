@@ -27,14 +27,14 @@ int main(void)
 
 	// Usando el config creado previamente, leemos los valores del config y los 
 	// dejamos en las variables 'ip', 'puerto' y 'valor'
-	ip = config_get_string_value(config, "IP");
-	puerto = string_itoa(config_get_int_value(config, "PUERTO"));
+	ip = config_get_string_value(config,"IP");
+	puerto = config_get_string_value(config,"PUERTO");
 	valor = config_get_string_value(config, "CLAVE");
 
 	// Loggeamos el valor de config
 
 	log_info(logger, "ip:%s", ip);
-	log_info(logger, "puerto:%d",puerto);
+	log_info(logger, "puerto:%s",puerto);
 	log_info(logger, "valor:%s", valor);
 	/* ---------------- LEER DE CONSOLA ---------------- */
 
@@ -48,6 +48,7 @@ int main(void)
 	conexion = crear_conexion(ip, puerto);
 
 	// Enviamos al servidor el valor de CLAVE como mensaje
+	enviar_mensaje(valor,conexion);
 
 	// Armamos y enviamos el paquete
 	paquete(conexion);
