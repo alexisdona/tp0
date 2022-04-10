@@ -10,6 +10,8 @@
 
 #include "utils.h"
 
+#define LOG_NAME "CLIENTE_LOG"
+
 
 t_log* iniciar_logger(void);
 t_config* iniciar_config(void);
