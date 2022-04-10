@@ -60,7 +60,7 @@ int main(void)
 
 t_log* iniciar_logger(void)
 {
-	t_log* nuevo_logger = log_create(LOG_FILE, LOG_NAME, true, LOG_LEVEL_INFO );;
+	t_log* nuevo_logger = log_create(LOG_FILE, LOG_NAME, false, LOG_LEVEL_INFO );;
 
 	return nuevo_logger;
 }
@@ -77,12 +77,11 @@ void leer_consola(t_log* logger)
 	char* leido;
 
 	// La primera te la dejo de yapa
-	leido = readline("> ");
+	leido = readline("cli> ");
+	log_info(logger, leido);
+	free(leido);
+	break;
 
-	// El resto, las vamos leyendo y logueando hasta recibir un string vacío
-
-
-	// ¡No te olvides de liberar las lineas antes de regresar!
 
 }
 
