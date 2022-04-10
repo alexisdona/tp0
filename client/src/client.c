@@ -9,12 +9,14 @@ int main(void)
 	char* puerto;
 	char* valor;
 
-	t_log* logger;
+	t_log* logger = iniciar_logger();
+
 	t_config* config;
 
 	/* ---------------- LOGGING ---------------- */
 
-	logger = iniciar_logger();
+	//logger = iniciar_logger();
+	log_info(logger, "Hola soy un log");
 
 	// Usando el logger creado previamente
 	// Escribi: "Hola! Soy un log"
@@ -54,7 +56,7 @@ int main(void)
 
 t_log* iniciar_logger(void)
 {
-	t_log* nuevo_logger;
+	t_log* nuevo_logger = log_create(LOG_FILE, LOG_NAME, true, LOG_LEVEL_INFO );;
 
 	return nuevo_logger;
 }
