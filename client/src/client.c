@@ -76,11 +76,17 @@ void leer_consola(t_log* logger)
 {
 	char* leido;
 
-	// La primera te la dejo de yapa
-	leido = readline("cli> ");
-	log_info(logger, leido);
-	free(leido);
-	break;
+
+	while(1) {
+		leido = readline("cli> ");
+		if(strcmp(leido, CARACTER_SALIDA) == 0) {
+			free(leido);
+			break;
+		}
+		log_info(logger, leido);
+
+	}
+
 
 
 }
