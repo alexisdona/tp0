@@ -2,7 +2,7 @@
 
 int iniciar_servidor(void)
 {
-	int socket_servidor;
+	int socket_servidor, socket_conexion;
 
 	struct addrinfo hints, *servinfo, *p;
 

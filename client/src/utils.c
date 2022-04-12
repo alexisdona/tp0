@@ -18,22 +18,21 @@ void* serializar_paquete(t_paquete* paquete, int bytes)
 
 int crear_conexion(char *ip, char* puerto)
 {
-	struct addrinfo hints;
-	struct addrinfo *server_info;
 
-	memset(&hints, 0, sizeof(hints));
-	hints.ai_family = AF_UNSPEC;
-	hints.ai_socktype = SOCK_STREAM;
-	hints.ai_flags = AI_PASSIVE;
+	struct sockaddr_in direccionServidor;
+	direccionServidor.sin_family = AF_INET;
+	direccionServidor.sin_addr.s_addr = inet_addr("127.0.0.1");
+	direccionServidor.sin_port = htons(4444);
 
-	getaddrinfo(ip, puerto, &hints, &server_info);
 
 	// Ahora vamos a crear el socket.
-	int socket_cliente = 0;
-	// Ahora que tenemos el socket, vamos a conectarlo
-	connect(socket_cliente, server_info->ai_addr, server_info->ai_addrlen);
+	int socket_cliente = socket(AF_INET, SOCK_STREAM, 0);
 
-	freeaddrinfo(server_info);
+	// Ahora que tenemos el socket, vamos a conectarlo
+	if (connect(socket_cliente, (void*) &direccionServidor, sizeof(direccionServidor)) !=0) {
+		perror("Hubo un problema conectando al servidor.");
+		return 1;
+	}
 
 	return socket_cliente;
 }

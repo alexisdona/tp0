@@ -13,7 +13,7 @@
 
 #define LOG_NAME "CLIENTE_LOG"
 #define LOG_FILE "cliente.log"
-#define CONFIG_FILE "../configs/cliente.config"
+#define CONFIG_FILE "configs/cliente.config"
 #define CARACTER_SALIDA ""
 
 t_log* iniciar_logger(void);
