@@ -92,14 +92,22 @@ void paquete(int conexion)
 {
 	// Ahora toca lo divertido!
 	char* leido;
-	t_paquete* paquete;
+	t_paquete* paquete = crear_paquete();
 
 	// Leemos y esta vez agregamos las lineas al paquete
-
-
+	int leiCaracterSalida;
+	do{
+		leido = readline("cli> ");
+		leiCaracterSalida = strcmp(leido, CARACTER_SALIDA);
+		if(leiCaracterSalida!=0) agregar_a_paquete(paquete,leido,strlen(leido)+1);
+		free(leido);
+	}while(leiCaracterSalida);
+	enviar_paquete(paquete,conexion);
 	// ¡No te olvides de liberar las líneas y el paquete antes de regresar!
-	
+	free(paquete);
+
 }
+
 
 void terminar_programa(int conexion, t_log* logger, t_config* config)
 {
