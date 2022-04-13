@@ -104,16 +104,15 @@ void paquete(int conexion)
 	}while(leiCaracterSalida);
 	enviar_paquete(paquete,conexion);
 	// ¡No te olvides de liberar las líneas y el paquete antes de regresar!
-	free(paquete);
+	eliminar_paquete(paquete);
 
 }
-
 
 void terminar_programa(int conexion, t_log* logger, t_config* config)
 {
 	/* Y por ultimo, hay que liberar lo que utilizamos (conexion, log y config) 
 	  con las funciones de las commons y del TP mencionadas en el enunciado */
-	log_info(logger, "Terminando programa");
+	log_info(logger, "Terminando programa cliente");
 	log_destroy(logger);
 	if(config!=NULL) config_destroy(config);
 	liberar_conexion(conexion);
