@@ -10,7 +10,6 @@ int main(void)
 	char* valor;
 
 	t_log* logger;
-
 	t_config* config;
 
 	/* ---------------- LOGGING ---------------- */
@@ -19,30 +18,23 @@ int main(void)
 
 	log_info(logger, "Hola! soy un log");
 
-
-
 	/* ---------------- ARCHIVOS DE CONFIGURACION ---------------- */
 
 	config = iniciar_config();
 
 	// Usando el config creado previamente, leemos los valores del config y los 
 	// dejamos en las variables 'ip', 'puerto' y 'valor'
-
-	//ip = "127.0.0.1"; //config_get_string_value(config,"IP");
 	ip = config_get_string_value(config,"IP");
-	//puerto = 4444;//config_get_string_value(config,"PUERTO");
 	puerto = config_get_int_value(config,"PUERTO");
-	//valor = "CLAVE";//config_get_string_value(config, "CLAVE");
 	valor = config_get_string_value(config, "CLAVE");
 
 	// Loggeamos el valor de config
-
-	log_info(logger, "ip:%s", ip);
-	log_info(logger, "puerto:%d",puerto);
-	log_info(logger, "valor:%s", valor);
+	log_info(logger, "IP:%s", ip);
+	log_info(logger, "PUERTO:%d",puerto);
+	log_info(logger, "VALOR:%s", valor);
 	/* ---------------- LEER DE CONSOLA ---------------- */
 
-	//leer_consola(logger);
+	leer_consola(logger);
 
 	/*---------------------------------------------------PARTE 3-------------------------------------------------------------*/
 
@@ -74,27 +66,25 @@ t_log* iniciar_logger(void)
 
 t_config* iniciar_config(void)
 {
-	t_config* nuevo_config = config_create(CONFIG_FILE);
-
+	t_config* nuevo_config;
+	if((nuevo_config = config_create(CONFIG_FILE)) == NULL){
+		printf("No pude leer la config\n");
+		exit(2);
+	}
 	return nuevo_config;
 }
 
 void leer_consola(t_log* logger)
 {
+
 	char* leido;
-
-
-	while(1) {
+	int leiCaracterSalida;
+	do{
 		leido = readline("cli> ");
-		if(strcmp(leido, CARACTER_SALIDA) == 0) {
-			free(leido);
-			break;
-		}
-		log_info(logger, leido);
-
-	}
-
-
+		leiCaracterSalida = strcmp(leido, CARACTER_SALIDA);
+		if(leiCaracterSalida!=0) log_info(logger,"cli:> %s",leido);
+		free(leido);
+	}while(leiCaracterSalida);
 
 }
 
@@ -117,6 +107,6 @@ void terminar_programa(int conexion, t_log* logger, t_config* config)
 	  con las funciones de las commons y del TP mencionadas en el enunciado */
 	log_info(logger, "Terminando programa");
 	log_destroy(logger);
-	config_destroy(config);
+	if(config!=NULL) config_destroy(config);
 	liberar_conexion(conexion);
 }

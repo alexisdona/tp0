@@ -16,7 +16,7 @@ void* serializar_paquete(t_paquete* paquete, int bytes)
 	return magic;
 }
 
-int crear_conexion(char *ip, int puerto)
+int crear_conexion(char* ip, int puerto)
 {
 	int socket_cliente = socket(AF_INET, SOCK_STREAM, 0);
 
