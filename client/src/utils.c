@@ -16,22 +16,20 @@ void* serializar_paquete(t_paquete* paquete, int bytes)
 	return magic;
 }
 
-int crear_conexion(char *ip, char* puerto)
+int crear_conexion(char *ip, int puerto)
 {
+	int socket_cliente = socket(AF_INET, SOCK_STREAM, 0);
 
 	struct sockaddr_in direccionServidor;
 	direccionServidor.sin_family = AF_INET;
-	direccionServidor.sin_addr.s_addr = inet_addr("127.0.0.1");
-	direccionServidor.sin_port = htons(4444);
+	direccionServidor.sin_addr.s_addr = inet_addr(ip);
+	direccionServidor.sin_port = htons(puerto);
 
-
-	// Ahora vamos a crear el socket.
-	int socket_cliente = socket(AF_INET, SOCK_STREAM, 0);
 
 	// Ahora que tenemos el socket, vamos a conectarlo
-	if (connect(socket_cliente, (void*) &direccionServidor, sizeof(direccionServidor)) !=0) {
+	if (connect(socket_cliente, (void*) &direccionServidor, sizeof(direccionServidor)) == -1) {
 		perror("Hubo un problema conectando al servidor.");
-		return 1;
+		exit(-1);
 	}
 
 	return socket_cliente;
