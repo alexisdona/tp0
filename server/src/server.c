@@ -20,8 +20,21 @@ int main(void) {
 			list_iterate(lista, (void*) iterator);
 			break;
 		case -1:
-			log_error(logger, "el cliente se desconecto. Terminando servidor");
-			return EXIT_FAILURE;
+			log_info(logger, "El cliente se desconecto.");
+			int opcion;
+			printf("¿Desea mantener el servidor corriendo? 1-Si 0-No\n");
+			scanf("%d", &opcion);
+			if(opcion==1){
+				log_info(logger,"Servidor continua corriendo...");
+				cliente_fd = esperar_cliente(server_fd);
+			}else if(opcion==0){
+				log_info(logger,"Terminando servidor...");
+				return EXIT_SUCCESS;
+			}else{
+				log_error(logger,"Opcion invalida. Terminando servidor...");
+				return EXIT_FAILURE;
+			}
+			break;
 		default:
 			log_warning(logger,"Operacion desconocida. No quieras meter la pata");
 			break;
