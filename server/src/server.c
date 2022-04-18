@@ -25,10 +25,17 @@ int main(void) {
 			printf("¿Desea mantener el servidor corriendo? 1-Si 0-No\n");
 			scanf("%d", &opcion);
 			if(opcion==1){
+				if (recibir_operacion(cliente_fd)==SIN_CLIENTES) {
+					log_info(logger, "No hay mas clientes conectados, se cierra el servidor.");
+					close(server_fd);
+					return EXIT_SUCCESS;
+				}
 				log_info(logger,"Servidor continua corriendo...");
 				cliente_fd = esperar_cliente(server_fd);
+
 			}else if(opcion==0){
 				log_info(logger,"Terminando servidor...");
+				close(server_fd);
 				return EXIT_SUCCESS;
 			}else{
 				log_error(logger,"Opcion invalida. Terminando servidor...");

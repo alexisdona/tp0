@@ -33,7 +33,7 @@ int main(void)
 	log_info(logger, "PUERTO:%d",puerto);
 	log_info(logger, "VALOR:%s", valor);
 	/* ---------------- LEER DE CONSOLA ---------------- */
-
+	printf("Log del cliente\n");
 	leer_consola(logger);
 
 	/*---------------------------------------------------PARTE 3-------------------------------------------------------------*/
@@ -49,7 +49,8 @@ int main(void)
 	enviar_mensaje(valor,conexion);
 
 	// Armamos y enviamos el paquete
-	paquete(conexion);
+	printf("Paquete a enviar al servidor:\n");
+	armarPaquete(conexion);
 
 	terminar_programa(conexion, logger, config);
 
@@ -88,7 +89,7 @@ void leer_consola(t_log* logger)
 
 }
 
-void paquete(int conexion)
+void armarPaquete(int conexion)
 {
 	// Ahora toca lo divertido!
 	char* leido;
